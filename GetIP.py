@@ -1,19 +1,25 @@
 #pegar ip da lan usando ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' |grep -Eo '([0-9]*\.){3}[0-9]*' |grep -v '127.0.0.1'
 #pegar ip wan ipv4 usando curl -4 icanhazip.com
 #pegar ip wan ipv6 usando curl -6 icanhazip.com
-
-#!/bin/bash
-
 import platform
 import os
 import time
 import socket
 import urllib.request
-import telegram
+import requests
 
 # Obtenha o token do bot e substitua o valor abaixo
-TOKEN = '5743626552:AAFTLiLkmRq_3nMI32Cfy_lyRlS9_oCpaA4'
-CHAT_ID = '364880828'
+def send_to_telegram(message):
+    
+    apiToken = 'SEUTOKEN'
+    chatID = 'SEU-CHAT-ID'
+    apiURL = f'https://api.telegram.org/bot{apiToken}/sendMessage'
+
+    try:
+        response = requests.post(apiURL, json={'chat_id': chatID, 'text': message})
+        print(response.text)
+    except Exception as e:
+        print(e)
 
 
 if platform.system() == "Windows":
@@ -47,14 +53,11 @@ while True:
         
         
         # Crie uma mensagem com as informações do IP
-        message = f"Hostname: {hostname}\nIP LAN Address: {lan_ipv4}\nIP WAN Address: {wan_ipv4}\nIP WAN6 Address: {wan_ipv6}"
+        message = f"Hostname: {hostname}\nEndereço IP da LAN em IPv4: {lan_ipv4}\nEndereço IP da WAN em IPv4: {wan_ipv4}\nEndereço IP da WAN em IPv6: {wan_ipv6}"
 
-        # Crie uma instância do bot
-        bot = telegram.Bot(TOKEN)
+        send_to_telegram(message)    
 
-        # Envie a mensagem para o chat_id especificado
-        #bot.send_message(chat_id=CHAT_ID, text=message)
-        bot.send_message(chat_id=CHAT_ID, text=message)
+     
         break
     else:
         print("Ping não concluído. Tentando novamente em 5 segundos...")
