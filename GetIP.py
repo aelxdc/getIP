@@ -1,6 +1,3 @@
-#pegar ip da lan usando ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' |grep -Eo '([0-9]*\.){3}[0-9]*' |grep -v '127.0.0.1'
-#pegar ip wan ipv4 usando curl -4 icanhazip.com
-#pegar ip wan ipv6 usando curl -6 icanhazip.com
 import platform
 import os
 import time
@@ -38,7 +35,7 @@ while True:
         s.connect(("8.8.8.8", 80))
         lan_ipv4 = s.getsockname()[0]
         s.close()
-        lan_ipv6 = socket.getaddrinfo(socket.gethostname(), None, socket.AF_INET6)[0][4][0]
+        #lan_ipv6 = socket.getaddrinfo(socket.gethostname(), None, socket.AF_INET6)[0][4][0]
 
 
         hostname = socket.gethostname()
