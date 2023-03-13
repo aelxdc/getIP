@@ -5,9 +5,9 @@ import socket
 import urllib.request
 import requests
 wan_ipv6="null"
+
 # Obtenha o token do bot e substitua o valor abaixo
 def send_to_telegram(message):
-
     apiToken = 'SEU_TOKEN'
     chatID = 'CHAT_ID'
     apiURL = f'https://api.telegram.org/bot{apiToken}/sendMessage'
@@ -38,8 +38,6 @@ while True:
         s.connect(("google.com", 80))
         lan_ipv4 = s.getsockname()[0]
         s.close()
-#       lan_ipv6 = socket.getaddrinfo(socket.gethostname(), None, socket.AF_INET6)[0][4][0]
-
 
         hostname = socket.gethostname()
         print("Endereço IP da LAN em IPv4:", lan_ipv4)
@@ -53,10 +51,8 @@ while True:
             print("Endereço IP da WAN em IPv6:", wan_ipv6)
         
 
-
         # Crie uma mensagem com as informações do IP
         message = f"Hostname: {hostname}\nEndereço IP da LAN em IPv4: {lan_ipv4}\nEndereço IP da WAN em IPv4: {wan_ipv4}\nEndereço IP da WAN em IPv6: {wan_ipv6}"
-
         send_to_telegram(message)
 
 
