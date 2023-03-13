@@ -1,15 +1,9 @@
-import platform
-import os
-import time
-import socket
-import urllib.request
-import requests
-wan_ipv6="null"
+import platform, os, time, socket, urllib.request, requests
 
 # Obtenha o token do bot e substitua o valor abaixo
 def send_to_telegram(message):
     apiToken = 'SEU_TOKEN'
-    chatID = 'CHAT_ID'
+    chatID = 'SEU-CHAT-ID'
     apiURL = f'https://api.telegram.org/bot{apiToken}/sendMessage'
 
     try:
@@ -49,13 +43,12 @@ while True:
         if response6 == 0:
             wan_ipv6 = urllib.request.urlopen("https://ipv6.icanhazip.com").read().decode().strip()
             print("Endereço IP da WAN em IPv6:", wan_ipv6)
-        
+        else:
+            wan_ipv6="null"
 
         # Crie uma mensagem com as informações do IP
         message = f"Hostname: {hostname}\nEndereço IP da LAN em IPv4: {lan_ipv4}\nEndereço IP da WAN em IPv4: {wan_ipv4}\nEndereço IP da WAN em IPv6: {wan_ipv6}"
         send_to_telegram(message)
-
-
         break
     else:
         print("Ping não concluído. Tentando novamente em 5 segundos...")
